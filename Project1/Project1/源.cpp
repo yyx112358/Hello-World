@@ -1,6 +1,6 @@
 #include <iostream>
 using namespace std;
-
+//ä¿®æ”¹ä¸€ä¸‹
 class MyVector
 {
 public:
@@ -18,7 +18,7 @@ public:
 		capacity = num;
 		cout << __FUNCTION__ << endl;
 	}
-	MyVector(int num, int value)//´´½¨num¸övalue
+	MyVector(int num, int value)//Â´Â´Â½Â¨numÂ¸Ã¶value
 	{
 		p = new int[num];
 		size = num;
