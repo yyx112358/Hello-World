@@ -7,108 +7,130 @@ public:
 	MyVector()
 	{
 		p = new int[0];
-		size = 0;
-		capacity = 0;
+		_size = 0;
+		_capacity = 0;
 		cout << __FUNCTION__ << endl;
 	}
-	MyVector(int num)
+	MyVector(const int num)
 	{
 		p = new int[num];
-		size = num;
-		capacity = num;
+		_size = num;
+		_capacity = num;
 		cout << __FUNCTION__ << endl;
 	}
-	MyVector(size_t num, int value)//创建num个value
+	MyVector(const size_t num,const int value)//创建num个value
 	{
 		p = new int[num];
-		size = num;
-		capacity = num;
+		_size = num;
+		_capacity = num;
 		for (size_t i = 0; i < num; i++)
 		{
 			p[i] = value;
 		}
 		cout << __FUNCTION__ << endl;
 	}
+	MyVector(const MyVector&src);//复制构造函数，将src的内容复制过来
 	~MyVector()
 	{
 		delete[] p;
-		size = 0;
-		capacity = 0;
+		_size = 0;
+		_capacity = 0;
 		cout << __FUNCTION__ << endl;
 	}
-	void puch_back(int pushnum)
+
+	size_t size() const;
+	size_t capacity() const;
+	bool empty() const;
+
+	//返回元素引用，注意考虑越界和空数组的情况
+	int& at(const size_t loc);
+	int& front();
+	int& back();
+
+	void puch_back(const int pushnum)
 	{
 		int *tmp;
-		if (size >= capacity)
+		if (_size >= _capacity)
 		{
-			tmp = new int[size + 1];
-			for (size_t i = 0; i < size; i++)
+			tmp = new int[_size + 1];
+			for (size_t i = 0; i < _size; i++)
 			{
 				tmp[i] = p[i];
 			}
-			tmp[size] = pushnum;
+			tmp[_size] = pushnum;
 			p = tmp;
-			size++;
-			capacity++;
+			_size++;
+			_capacity++;
 		}
 		else
 		{
-			p[size] = pushnum;
-			size++;
+			p[_size] = pushnum;
+			_size++;
 		}
 
 	}
 	void pop_back()
 	{
-		size = size - 1;
+		//TODO:MyVector是空的时候pop_back()怎么办？
+		_size = _size - 1;
 	}
-	friend ostream&operator<<(ostream&os, const MyVector&src)
+
+	void insert(const size_t loc,const int value)
 	{
-		os << '[';
-		for (auto i = 0u; i < src.size; i++)
-			os << src.p[i] << ',';
-		os << ']' << endl;
-		return os;
-	}
-	void insert(size_t loc, int value)
-	{
-		if (loc >= size)
+		if (loc >= _size)
 		{
 			throw "出错啦";
 		}
-		if (size>=capacity)
+		if (_size>=_capacity)
 		{
 			int *tmp;
-			tmp = new int[size+1];
+			tmp = new int[_size+1];
 			for (size_t i = 0; i <loc; i++)
 			{
 				tmp[i] = p[i];
 			}
-			tmp[loc] = value;
-			for (size_t i = loc; i <size;i++)
+			tmp[loc] = value;//这里很棒，没有重复复制
+			for (size_t i = loc; i <_size;i++)
 			{
 				tmp[i + 1] = p[i];
 			}
 			delete[] p;
 			p = tmp;
-			size++;
-			capacity++;
+			_size++;
+			_capacity++;
 		}
 		else
 		{
-			for (size_t i = size; i >loc; i--)
+			for (size_t i = _size; i >loc; i--)
 			{
 				p[i] = p[i - 1];
 			}
 			p[loc] = value;
-			size++;
+			_size++;
 		}
+	}
+	void erase(const size_t loc);//删除下标loc的元素
+	void clear();//清空
+	void swap(MyVector& src);//交换内容，应做到O(1)复杂度
+
+	MyVector& operator=(const MyVector&src);//赋值运算符重载
+	int& operator[](const size_t loc);//[]运算符重载
+	bool operator==(const MyVector&src);//返回两个MyVector是否相等
+
+	friend string to_string(const MyVector&src);
+	friend ostream&operator<<(ostream&os, const MyVector&src)
+	{
+		os << '[';
+		for (auto i = 0u; i < src._size; i++)
+			os << src.p[i] << ',';
+		os << ']' << endl;
+		return os;
 	}
 protected:
 private:
 	int *p = nullptr;
-	size_t size = 0;
-	size_t capacity = 0;
+	size_t _size = 0;
+	size_t _capacity = 0;
 };
 #include <vector>
 int main()
