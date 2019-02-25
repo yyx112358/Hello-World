@@ -29,24 +29,65 @@ public:
 		}
 		cout << __FUNCTION__ << endl;
 	}
-	MyVector(const MyVector&src);//复制构造函数，将src的内容复制过来
+	MyVector(const MyVector&src)//复制构造函数，将src的内容复制过来
+	{
+// 		_size = src.size();
+// 		_capacity = _size;
+// 		p = new int[_size];
+// 		for (int i = 0; i < _size;i++)
+// 		{
+// 			p[i] = src.p[i];
+// 		}
+		_copy(src);
+		cout << __FUNCTION__ << endl;
+	}
 	~MyVector()
 	{
 		delete[] p;
+		p = nullptr;//这里要指向nullptr
 		_size = 0;
 		_capacity = 0;
 		cout << __FUNCTION__ << endl;
 	}
 
-	size_t size() const;
-	size_t capacity() const;
-	bool empty() const;
+	size_t size() const
+	{
+		return _size;
+	}
+	size_t capacity() const
+	{
+		return _capacity;
+	}
+	bool empty() const
+	{
+		return _size == 0;
+	}
 
 	//返回元素引用，注意考虑越界和空数组的情况
-	int& at(const size_t loc);
-	int& front();
-	int& back();
-
+	int& at(const size_t loc)
+	{
+		if (size()==0&&size()<=loc)
+		{
+			throw "错误提示";
+		}
+		return p[loc-1];
+	}
+	int& front()
+	{
+		if (size() == 0)
+		{
+			throw "错误提示";
+		}
+		return p[0];
+	}
+	int& back()
+	{
+		if (size() == 0)
+		{
+			throw "错误提示";
+		}
+		return p[size()-1];
+	}
 	void puch_back(const int pushnum)
 	{
 		int *tmp;
@@ -109,13 +150,77 @@ public:
 			_size++;
 		}
 	}
-	void erase(const size_t loc);//删除下标loc的元素
-	void clear();//清空
-	void swap(MyVector& src);//交换内容，应做到O(1)复杂度
+	void erase(const size_t loc)//删除下标loc的元素
+	{
+		if (size() == 0 && size() < loc)
+		{
+			throw "错误提示";
+		}
+		int *tmp=new int[capacity()-2];
+		for (int i = 0; i < size();i++)
+		{
+			if (i<loc-1)
+			{
+				tmp[i] = p[i];
+			}
+			else if (i >= loc)
+			{
+				tmp[i] = p[i + 1];
+			}
+			else
+			{
+				continue;
+			}
+		}
+		p = tmp;
+		delete[] p;
+		_size--;
+		_capacity--;
+	}
+	void clear()//清空
+	{
+		 p = nullptr;
+		 _size = 0;
+		 _capacity = 0;
+	}
+	void swap(MyVector& src)//交换内容，应做到O(1)复杂度
+	{
+		int *tmp;
+		tmp = p;
+		p = src.p;
+		src.p = tmp;
+		std::swap(_size,src._size);
+		std::swap(_capacity, src._capacity);
+	}
 
-	MyVector& operator=(const MyVector&src);//赋值运算符重载
-	int& operator[](const size_t loc);//[]运算符重载
-	bool operator==(const MyVector&src);//返回两个MyVector是否相等
+ 	MyVector& operator=(const MyVector&src)//赋值运算符重载
+ 	{
+	_copy(src);
+	return *this;
+ 	}
+	int& operator[](const size_t loc)//[]运算符重载
+	{
+		at(loc);
+	}
+	bool operator==(const MyVector&src)//返回两个MyVector是否相等
+	{
+		if (size()==src.size())
+		{
+			for (int i = 0; i < size();i++)
+			{
+				if (p[i]!=src.p[i])
+				{
+					return false;
+					break;
+				}
+				return true;
+			}
+		}
+		else
+		{
+			return false;
+		}
+	}
 
 	friend string to_string(const MyVector&src);
 	friend ostream&operator<<(ostream&os, const MyVector&src)
@@ -128,16 +233,37 @@ public:
 	}
 protected:
 private:
+	void _copy(const MyVector&src)
+	{
+		if (p!=nullptr)
+		{
+			delete[]p;
+		}
+		_size = src.size();
+		_capacity = _size;
+		p = new int[_size];
+		for (int i = 0; i < _size; i++)
+		{
+			p[i] = src.p[i];
+		}
+	}
+
 	int *p = nullptr;
 	size_t _size = 0;
 	size_t _capacity = 0;
+
+	
 };
 #include <vector>
+
+
 int main()
 {
- 	vector<int>vi{ 0,1,2,3,4,5 };
+/* 	vector<int>vi{ 0,1,2,3,4,5 };*/
+	//vi.clear();
+/*	vi.~vector();*/
 // 	vi.insert(vi.begin() + 2, 99);
-	vi.erase(vi.begin() + 3);
+// 		vi.erase(vi.begin() + 3);
 	MyVector v1;
 	cout << v1;
 	MyVector v2(5);//int a[5]
@@ -159,8 +285,30 @@ int main()
 	v3.pop_back();
 	cout << v3;
 	v3.insert(2, 101);
-	v3.insert(100, 222);
+	//v3.insert(100, 222);
 	cout << v3;//friend ostream&operator<<(ostream&os, const MyVector&src)   ||friend ostream&operator<<(cout, v3)
-	//system("pause");
+	MyVector v5 = v3;
+	cout << "---------swapp函数-------------" << endl;
+	MyVector Vs(4, 5);
+	MyVector Va(6, 6);
+	Vs.swap(Va);
+	cout << Vs;
+	cout << Va;
+	vector<int>vi{ 0,1,2,3,4,5 };
+	vector<int>vt{ 0,1,2,3,4,6 };
+	try
+	{
+vi.at(100);
+	}
+	catch (const std::out_of_range&e)
+	{
+		cout << e.what() << endl;
+	}
+	
+
+	bool flag;
+	flag= vi == vt;
+	cout << flag << endl;
+	system("pause");
 	return 0;
 }
