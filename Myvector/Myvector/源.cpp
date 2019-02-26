@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vld.h>
 using namespace std;
 
 class MyVector
@@ -66,11 +67,11 @@ public:
 	//返回元素引用，注意考虑越界和空数组的情况
 	int& at(const size_t loc)
 	{
-		if (size()==0&&size()<=loc)
+		if (size()<=loc)
 		{
 			throw "错误提示";
 		}
-		return p[loc-1];
+		return p[loc];
 	}
 	int& front()
 	{
@@ -88,7 +89,7 @@ public:
 		}
 		return p[size()-1];
 	}
-	void puch_back(const int pushnum)
+	void push_back(const int pushnum)
 	{
 		int *tmp;
 		if (_size >= _capacity)
@@ -99,6 +100,7 @@ public:
 				tmp[i] = p[i];
 			}
 			tmp[_size] = pushnum;
+			delete[]p;
 			p = tmp;
 			_size++;
 			_capacity++;
@@ -113,6 +115,8 @@ public:
 	void pop_back()
 	{
 		//TODO:MyVector是空的时候pop_back()怎么办？
+		if (empty() == true)
+			throw "空数组";
 		_size = _size - 1;
 	}
 
@@ -152,12 +156,13 @@ public:
 	}
 	void erase(const size_t loc)//删除下标loc的元素
 	{
-		if (size() == 0 && size() < loc)
+		if (size() <= loc)
 		{
 			throw "错误提示";
 		}
-		int *tmp=new int[capacity()-2];
-		for (int i = 0; i < size();i++)
+		//这里可以不重新分配内存
+		int *tmp=new int[capacity()-1];
+		for (int i = 0; i < size();i++)//最好把条件判断放在外面
 		{
 			if (i<loc-1)
 			{
@@ -179,6 +184,7 @@ public:
 	}
 	void clear()//清空
 	{
+		delete[]p;
 		 p = nullptr;
 		 _size = 0;
 		 _capacity = 0;
@@ -200,7 +206,7 @@ public:
  	}
 	int& operator[](const size_t loc)//[]运算符重载
 	{
-		at(loc);
+		return at(loc);
 	}
 	bool operator==(const MyVector&src)//返回两个MyVector是否相等
 	{
@@ -211,10 +217,9 @@ public:
 				if (p[i]!=src.p[i])
 				{
 					return false;
-					break;
 				}
-				return true;
 			}
+			return true;
 		}
 		else
 		{
@@ -235,6 +240,7 @@ protected:
 private:
 	void _copy(const MyVector&src)
 	{
+		//这里会有自我赋值问题
 		if (p!=nullptr)
 		{
 			delete[]p;
@@ -270,15 +276,15 @@ int main()
 	cout << v2;
 	MyVector v3(5, 6);//int a[5]={6,6,6,6,6}
 	cout << v3;
-	v3.puch_back(77);
+	v3.push_back(77);
 	cout << v3;
 	v3.pop_back();
 	cout << v3;
 	v3.pop_back();
 	cout << v3;
-	v3.puch_back(88);
+	v3.push_back(88);
 	cout << v3;
-	v3.puch_back(99);
+	v3.push_back(99);
 	cout << v3;
 	v3.insert(2, 100);
 	cout << v3;
