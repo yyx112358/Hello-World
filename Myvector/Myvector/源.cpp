@@ -2,6 +2,7 @@
 #include <vld.h>
 using namespace std;
 
+
 class MyVector
 {
 public:
@@ -20,7 +21,7 @@ public:
 		cout << __FUNCTION__ << endl;
 	}
 	MyVector(const size_t num,const int value)//创建num个value
-	{
+	{ 
 		p = new int[num];
 		_size = num;
 		_capacity = num;
@@ -40,7 +41,7 @@ public:
 // 			p[i] = src.p[i];
 // 		}
 		_copy(src);
-		cout << __FUNCTION__ << endl;
+		cout << __FUNCTION__ << endl;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
 	}
 	~MyVector()
 	{
@@ -260,8 +261,27 @@ private:
 
 	
 };
-#include <vector>
 
+class MyStack:private MyVector//pop push empty size top
+{
+public:
+	MyStack() :MyVector() { cout << "初始化构造函数"; }
+	MyStack(int num) :MyVector(num) { cout << "初始化构造函数num"; }
+	MyStack(int num,int value) :MyVector(num, value) { cout << "构造函数num,loc"; }
+	friend ostream&operator<<(ostream&os, const MyStack&src)
+	{
+		os << '[';
+		for (auto i = 0u; i < src._size; i++)
+			os << src.p[i] << ',';
+		os << ']' << endl;
+		return os;
+	}
+protected:
+private:
+	int *p = nullptr;
+	size_t _size = 0;
+	size_t _capacity = 0;
+};
 
 int main()
 {
@@ -270,51 +290,55 @@ int main()
 /*	vi.~vector();*/
 // 	vi.insert(vi.begin() + 2, 99);
 // 		vi.erase(vi.begin() + 3);
-	MyVector v1;
+// 	MyVector v1;
+// 	cout << v1;
+// 	MyVector v2(5);//int a[5]
+// 	cout << v2;
+// 	MyVector v3(5, 6);//int a[5]={6,6,6,6,6}
+// 	cout << v3;
+// 	v3.push_back(77);
+// 	cout << v3;
+// 	v3.pop_back();
+// 	cout << v3;
+// 	v3.pop_back();
+// 	cout << v3;
+// 	v3.push_back(88);
+// 	cout << v3;
+// 	v3.push_back(99);
+// 	cout << v3;
+// 	v3.insert(2, 100);
+// 	cout << v3;
+// 	v3.pop_back();
+// 	cout << v3;
+// 	v3.insert(2, 101);
+// 	//v3.insert(100, 222);
+// 	cout << v3;//friend ostream&operator<<(ostream&os, const MyVector&src)   ||friend ostream&operator<<(cout, v3)
+// 	MyVector v5 = v3;
+// 	cout << "---------swapp函数-------------" << endl;
+// 	MyVector Vs(4, 5);
+// 	MyVector Va(6, 6);
+// 	Vs.swap(Va);
+// 	cout << Vs;
+// 	cout << Va;
+// 	try
+// 	{
+// vi.at(100);
+// 	}
+// 	catch (const std::out_of_range&e)
+// 	{
+// 		cout << e.what() << endl;
+// 	}
+// 	
+// 
+// 	bool flag;
+// 	flag= vi == vt;
+// 	cout << flag << endl;
+	MyStack();
+	MyStack v1(3);
 	cout << v1;
-	MyVector v2(5);//int a[5]
+	MyStack v2(3, 4);
 	cout << v2;
-	MyVector v3(5, 6);//int a[5]={6,6,6,6,6}
-	cout << v3;
-	v3.push_back(77);
-	cout << v3;
-	v3.pop_back();
-	cout << v3;
-	v3.pop_back();
-	cout << v3;
-	v3.push_back(88);
-	cout << v3;
-	v3.push_back(99);
-	cout << v3;
-	v3.insert(2, 100);
-	cout << v3;
-	v3.pop_back();
-	cout << v3;
-	v3.insert(2, 101);
-	//v3.insert(100, 222);
-	cout << v3;//friend ostream&operator<<(ostream&os, const MyVector&src)   ||friend ostream&operator<<(cout, v3)
-	MyVector v5 = v3;
-	cout << "---------swapp函数-------------" << endl;
-	MyVector Vs(4, 5);
-	MyVector Va(6, 6);
-	Vs.swap(Va);
-	cout << Vs;
-	cout << Va;
-	vector<int>vi{ 0,1,2,3,4,5 };
-	vector<int>vt{ 0,1,2,3,4,6 };
-	try
-	{
-vi.at(100);
-	}
-	catch (const std::out_of_range&e)
-	{
-		cout << e.what() << endl;
-	}
-	
 
-	bool flag;
-	flag= vi == vt;
-	cout << flag << endl;
 	system("pause");
 	return 0;
 }
