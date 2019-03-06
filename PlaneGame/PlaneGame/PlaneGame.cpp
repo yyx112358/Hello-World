@@ -1,9 +1,25 @@
-#include "PlaneMove.h"
+#include "PlaneGame.h"
 #include<iostream>
 
 using namespace std;
 
 
+
+PlaneGame::PlaneGame()
+{
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			t[i][j] = ' ';
+		}
+	}
+}
+
+PlaneGame::~PlaneGame()
+{
+	delete[](*t);
+}
 
 PlaneMove::PlaneMove() 
 {
@@ -15,11 +31,9 @@ void PlaneMove::Move()
 {
 	keyevents();
 	screen(px, py);
-	display();
 }
 PlaneMove::~PlaneMove()
 {
-	delete[](*t);
 	px = 0;
 	py = 0;
 }
@@ -33,25 +47,9 @@ void PlaneMove::screen(int x, int y)
 {
 	px = x;
 	py = y;
-	for (int i = 0; i < n; i++)
-	{
-		for (int j = 0; j < n; j++)
-		{
-			t[i][j] = ' ';
-		}
-	}
 	t[x][y] = 'P';
 }
 
-void PlaneMove::display()
-{
-	for (int i = 0; i < n; i++)
-	{
-		for (int j = 0; j < n; j++)
-			cout << "  " << t[i][j];
-		cout << endl;
-	}
-}
 
 int PlaneMove::keyevents()
 {
@@ -71,3 +69,29 @@ int PlaneMove::keyevents()
 		}
 	}
 }
+
+void PlaneGame::display()
+{
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n; j++)
+			cout << "  " << t[i][j];
+		cout << endl;
+	}
+}
+
+EnemiesMove::EnemiesMove()
+		:Ex (9), Ey (rand() % 9)
+{}
+
+EnemiesMove::~EnemiesMove()
+{
+	Ex = 0; 
+	Ey = 0;
+}
+
+void EnemiesMove::screen()
+{
+	t[Ex--][Ey] = 'E';
+}
+
