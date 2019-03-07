@@ -7,7 +7,7 @@ Board::~Board()
 
 }
 
-void Board::Reset(int row, int col)
+void Board::Reset(int row, int col, char value)
 {
 
 }
