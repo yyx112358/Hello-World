@@ -3,10 +3,9 @@
 
 using namespace std;
 
-
 int main()
 {
-	Game game;
+	Game game(4,5);
 	game.Process();
 	return 0;
 }

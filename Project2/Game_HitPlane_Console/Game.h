@@ -1,14 +1,31 @@
 #pragma once
+#include "Board.h"
+#include <memory>
+#include <list>
+#include "Object.h"
 class Game
 {
 public:
-	Game();
-	~Game();
+	Game(int row,int col):_board(row,col){}
+	~Game(){}
 	
-	void Process();
+	void Process()//接收输入、根据输入处理、碰撞和交互、增删物体、显示
+	{}
 	void GetKeys();
 	void Display();
-	bool CrashFlag;
 
+protected:
+
+	bool _crashFlag;
+	//TODO:以后改成智能指针shared_ptr
+	Board _board;
+	std::list<std::shared_ptr<Object>>_objs;
+	std::list<std::weak_ptr<Object>>_players;
+	std::list<std::weak_ptr<Object>>_allys;
+	std::list<std::weak_ptr<Object>>_enemys;
+	std::list<std::weak_ptr<Object>>_allyBullets;
+	std::list<std::weak_ptr<Object>>_enemyBullets;
+	std::list<std::weak_ptr<Object>>_treasures;
+	std::list<std::weak_ptr<Object>>_effects;
 };
 

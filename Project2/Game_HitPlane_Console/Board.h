@@ -8,10 +8,10 @@ class Board
 public:
 	Board(int row,int col);
 	~Board();
-	void Reset();
+	void Reset(int row, int col);
 private:
-	vector <vector<char>>v1;
+	vector<vector<char>>bitmap;//
+	//TODO:四叉树数据结构，提供碰撞检测
 	int row, col;
 };
-
 
