@@ -8,10 +8,12 @@ class Board
 public:
 	Board(int row,int col);
 	~Board();
+
 	void Reset();
+	const std::vector<std::vector<char>>&GetMat() { return mat; }
+	const int row, col;
 private:
-	vector <vector<char>>v1;
-	int row, col;
+	std::vector<std::vector<char>>mat;	
 };
 
 
