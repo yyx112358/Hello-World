@@ -77,32 +77,38 @@ private:
 class OneEnemy
 {
 public:
+	OneEnemy(int x,int y,char shape)
+		:x(x),y(y),shape(shape)
+	{} 
 	int x, y;
 	char shape;
+
 };
 
 class Enemy
 {
 public:
- 	vector<int>Enemyx, Enemyy;
- 	vector<char>EnemyShape;
+//  	vector<int>Enemyx, Enemyy;
+//  	vector<char>EnemyShape;
+	vector<OneEnemy>EnemyState;
 	int Enemynum = 0;
 	Enemy()
 	{}
 	~Enemy()
 	{}
-	void RandomShape()
+	char RandomShape()
 	{
 		vector<char> RandomLibrary{ 'q','r','e' };
-		EnemyShape.push_back(RandomLibrary[rand() % 3]);
+		char rs=(RandomLibrary[rand() % 3]);
+		return rs;
 	}
 	void Enemytag(int i)
 	{
-		switch (EnemyShape[i])
+		switch (EnemyState[i].shape)
 		{
-		case 'q':Enemyx[i]--; Enemyy[i]--; break;
-		case 'e':Enemyx[i]--; break;
-		case 'r':Enemyx[i]--; Enemyy[i]++; break;
+		case 'q':(EnemyState[i].x)--; (EnemyState[i].y)--; break;
+		case 'e':(EnemyState[i].x)--; break;
+		case 'r':(EnemyState[i].x)--; (EnemyState[i].y)++; break;
 		default:
 			break;
 		}
@@ -163,9 +169,10 @@ int main()
 		ally.keyevents();
 		if (tim.EnemyTime()==true)//¼ÓµĞÈË
 		{
-			enemies.Enemyx.push_back(pboard->col() - 1);
-			enemies.Enemyy.push_back((rand() % (pboard->row())));
-			enemies.RandomShape();
+			int x=pboard->col() - 1;
+			int y=(rand() % (pboard->row()));
+			char c=enemies.RandomShape();
+			enemies.EnemyState.push_back(OneEnemy(x, y, c));
 			enemies.Enemynum += 1;
 		}
 		if (tim.MoveTime() ==true)
@@ -173,12 +180,13 @@ int main()
 			for (int i = 0; i < enemies.Enemynum; )
 			{
 				enemies.Enemytag(i);
-				if (enemies.Enemyx[i] < 0 || enemies.Enemyx[i] >= pboard->col()
-					|| enemies.Enemyy[i] < 0 || enemies.Enemyy[i] >= pboard->row())
+				if (enemies.EnemyState[i].x < 0 || enemies.EnemyState[i].x >= pboard->col()
+					|| enemies.EnemyState[i].y < 0 || enemies.EnemyState[i].y >= pboard->row())
 				{
-					enemies.Enemyx.erase(enemies.Enemyx.begin() + i);
-					enemies.Enemyy.erase(enemies.Enemyy.begin() + i);
-					enemies.EnemyShape.erase(enemies.EnemyShape.begin() + i);
+// 					enemies.Enemyx.erase(enemies.Enemyx.begin() + i);
+// 					enemies.Enemyy.erase(enemies.Enemyy.begin() + i);
+// 					enemies.EnemyShape.erase(enemies.EnemyShape.begin() + i);
+					enemies.EnemyState.erase(enemies.EnemyState.begin() + i);
 					enemies.Enemynum--;
 				}
 				else
@@ -187,7 +195,7 @@ int main()
 		}
 		for (auto i = 0; i < enemies.Enemynum;i++)
 		{
-			if ((ally.Ax()==enemies.Enemyx[i]) && ally.Ay()==enemies.Enemyy[i])
+			if ((ally.Ax()==enemies.EnemyState[i].x) && ally.Ay()==enemies.EnemyState[i].y)
 			{
 				cout << "Game over";
 				_endflag = 1;
@@ -201,14 +209,14 @@ int main()
 		pboard->mat[ally.Ay()][ally.Ax()] = ally.AllyShape;
 		for (auto i = 0; i < enemies.Enemynum;i++)
 		{
-			pboard->mat[enemies.Enemyy[i]][enemies.Enemyx[i]] = enemies.EnemyShape[i];
+			pboard->mat[enemies.EnemyState[i].y][enemies.EnemyState[i].x] = enemies.EnemyState[i].shape;
 		}
 		system("cls");
 		pboard->display();
 		pboard->mat[ally.Ay()][ally.Ax()] = ' ';
 		for (auto i = 0; i < enemies.Enemynum; i++)
 		{
-			pboard->mat[enemies.Enemyy[i]][enemies.Enemyx[i]] = ' ';
+			pboard->mat[enemies.EnemyState[i].y][enemies.EnemyState[i].x] = ' ';
 		}
 	}
 	delete pboard;

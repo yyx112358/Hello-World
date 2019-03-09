@@ -118,7 +118,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="源.cpp" />
+    <ClCompile Include="Ally.cpp" />
+    <ClCompile Include="Board.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="OneEbeny.cpp" />
+    <ClCompile Include="Tim.cpp" />
+    <ClCompile Include="源1.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Ally.h" />
+    <ClInclude Include="Board.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="OneEnemy.h" />
+    <ClInclude Include="Tim.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
