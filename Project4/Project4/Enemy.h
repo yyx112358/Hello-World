@@ -1,13 +1,13 @@
 #pragma once
 #include <vector>
-#include "OneEnemy.h"
+#include "Points.h"
 
 using namespace std;
 
 class Enemy
 {
 public:
-	vector<OneEnemy>EnemyState;
+	vector<Points>EnemyState;
 	int Enemynum = 0;
 	Enemy();
 	~Enemy();

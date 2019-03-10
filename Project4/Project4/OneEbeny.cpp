@@ -1,7 +1,7 @@
-#include "OneEnemy.h"
+#include "Points.h"
 
 
 
-OneEnemy::OneEnemy(int x, int y, char shape)
+Points::Points(int x, int y, char shape)
 	:x(x),y(y),shape(shape)
 {}

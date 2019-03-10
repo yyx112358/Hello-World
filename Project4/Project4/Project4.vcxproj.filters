@@ -21,9 +21,6 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="OneEbeny.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="Board.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -33,12 +30,15 @@
     <ClCompile Include="源1.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Bullets.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Points.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Board.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="OneEnemy.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
@@ -48,6 +48,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Tim.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullets.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Points.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
