@@ -7,5 +7,6 @@ int main()
 {
 	Game game(4,5);
 	game.Process();
+	system("pause");
 	return 0;
 }

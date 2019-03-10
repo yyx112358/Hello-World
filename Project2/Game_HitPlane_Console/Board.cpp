@@ -1,18 +1,6 @@
 #include "Board.h"
 
-
-
-Board::~Board()
+void Board::Draw(std::shared_ptr<Object>pobj)
 {
-
-}
-
-void Board::Reset(int row, int col, char value)
-{
-
-}
-
-Board::Board(int row, int col)
-{
-
+	
 }

@@ -4,7 +4,7 @@ class Plane :
 	public Object
 {
 public:
-	Plane();
-	virtual ~Plane();
+	Plane(){}
+	virtual ~Plane(){}
 };
 

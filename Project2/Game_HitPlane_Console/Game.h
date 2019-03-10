@@ -3,16 +3,17 @@
 #include <memory>
 #include <list>
 #include "Object.h"
+
 class Game
 {
 public:
-	Game(int row,int col):_board(row,col){}
+	Game(int row,int col);
 	~Game(){}
 	
-	void Process()//接收输入、根据输入处理、碰撞和交互、增删物体、显示
-	{}
-	void GetKeys();
+	void Process();//接收输入、根据输入处理、碰撞和交互、增删物体、显示
+	std::string GetKeys();
 	void Display();
+	void Pause(bool isPause);
 
 protected:
 
