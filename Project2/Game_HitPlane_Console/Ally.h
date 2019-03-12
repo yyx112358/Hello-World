@@ -13,7 +13,7 @@ public:
 	}
 
 
-	virtual void ProcessInput(std::string input) override
+	virtual void ProcessInput(const std::string& input) override
 	{
 		throw std::logic_error("The method or operation is not implemented.");
 	}
@@ -26,6 +26,12 @@ public:
 
 
 	virtual const Bitmap& GetBitmap() const override
+	{
+		throw std::logic_error("The method or operation is not implemented.");
+	}
+
+
+	virtual std::list<std::shared_ptr<Object>> Destroy() override
 	{
 		throw std::logic_error("The method or operation is not implemented.");
 	}

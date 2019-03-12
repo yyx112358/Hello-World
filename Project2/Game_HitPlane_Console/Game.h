@@ -18,15 +18,16 @@ public:
 protected:
 
 	bool _crashFlag;
-	//TODO:以后改成智能指针shared_ptr
+
 	Board _board;
 	std::list<std::shared_ptr<Object>>_objs;
+/*
 	std::list<std::weak_ptr<Object>>_players;
 	std::list<std::weak_ptr<Object>>_allys;
 	std::list<std::weak_ptr<Object>>_enemys;
 	std::list<std::weak_ptr<Object>>_allyBullets;
 	std::list<std::weak_ptr<Object>>_enemyBullets;
 	std::list<std::weak_ptr<Object>>_treasures;
-	std::list<std::weak_ptr<Object>>_effects;
+	std::list<std::weak_ptr<Object>>_effects;*/
 };
 

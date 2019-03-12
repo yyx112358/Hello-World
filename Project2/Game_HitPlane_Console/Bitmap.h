@@ -29,7 +29,7 @@ public:
 
 	uint8_t&operator()(size_t row, size_t col) { return _data[row][col]; }
 	uint8_t&operator()(Point pt) { return _data[pt.y][pt.x]; }
-
+	//TODO:将数据改为shared_ptr，并加入多个状态，如亮度系数、对比度系数、放大系数等来进行优化
 	std::vector<std::vector<uint8_t>>_data;
 	Size size;
 private:
