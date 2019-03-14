@@ -61,11 +61,13 @@
     <ClInclude Include="Enemy.h">
       <Filter>Objects</Filter>
     </ClInclude>
-    <ClInclude Include="Object.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
     <ClInclude Include="Plane.h">
       <Filter>Objects</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="Object.h">
+      <Filter>Objects</Filter>
+    </QtMoc>
   </ItemGroup>
 </Project>

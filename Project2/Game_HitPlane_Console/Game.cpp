@@ -8,7 +8,7 @@ using namespace std;
 Game::Game(int row, int col) 
 	:_board(row, col)
 {
-	auto player = make_shared<Ally>(Point(2,2), Size(1, 1), Size(col, row));
+	auto player = make_shared<Ally>(QRect(0,0,1,1), QSize(col, row));
 	_objs.push_back(player);
 	//_allys.push_back(std::weak_ptr<Object>(player));
 }

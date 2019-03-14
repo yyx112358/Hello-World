@@ -4,7 +4,7 @@ class Plane :
 	public Object
 {
 public:
-	Plane(Point tlpt, Size size,Size boardSize):Object(tlpt, size,boardSize){}
+	Plane(QRect area,QSize boardSize):Object(area,boardSize){}
 	virtual ~Plane(){}
 
 private:
