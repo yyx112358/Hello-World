@@ -4,19 +4,17 @@
 #include "Bitmap.h"
 #include "Object.h"
 
-using namespace std;
-
-class Board
+//TODO:之后改为抽象类
+class Board	//绘图类
 {
 public:
 	Board(int row, int col) :_bitmap(Size(col, row), ' ')
 	{}
 
-	void Board::Reset(int row, int col, uint8_t value)
-	{
-		_bitmap.Reset(value);
-	}
-	void Draw(std::shared_ptr<Object>pobj);
+	void Resize();
+	/*virtual*/ void Reset();//=0
+	/*virtual*/ void Paint();//=0
+	void AddObj(std::shared_ptr<Object>pobj);
 	Size size()const { return _bitmap.size; }
 private:
 	Bitmap _bitmap;//

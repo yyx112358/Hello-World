@@ -24,15 +24,12 @@
     <ClCompile Include="Board.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Ally.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Point.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Speed.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Object.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Board.h">
@@ -51,6 +48,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Bitmap.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

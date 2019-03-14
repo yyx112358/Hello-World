@@ -18,6 +18,8 @@ public:
 	Vec2 operator/(Tp scale) { return Vec2(x / scale, y / scale); }
 	Vec2& operator/=(Tp scale) { x /= scale; y /= scale; return*this; }
 
+	bool operator==(Vec2 src) { return (x == src.x) && (y == src.y); }
+	bool operator!=(Vec2 src) { return (x != src.x) || (y != src.y); }
 	//friend operator Vec2<float>() { return Vec2<float>(x, y); }
 
 	friend double Distance(Vec2 a, Vec2 b) { return sqrt((b.x - a.x)*(b.x - a.x) + (b.y - a.y)*(b.y - a.y)); }

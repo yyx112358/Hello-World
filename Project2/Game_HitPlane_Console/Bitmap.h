@@ -18,8 +18,12 @@ public:
 				_data[row][col] = value;
 	}
 
-	void Draw(Bitmap&src, Point tlpt)
+	void Draw(const Bitmap&src, Point tlpt)//将src画在自己上，
 	{
+		Point thisTlpt(0, 0), thisBrpt(size.x-1, size.y-1);
+		Point srcTlpt(tlpt), srcBrpt(tlpt + src.size - Point(1, 1));
+
+		
 		size_t thisBeginX = (tlpt.x >= 0) ? (tlpt.x) : (0);
 		size_t srcBeginX = (tlpt.x >= 0) ? (0) : (tlpt.x);
 		size_t thisBeginY = (tlpt.y >= 0) ? (tlpt.y) : (0);
@@ -29,6 +33,8 @@ public:
 
 	uint8_t&operator()(size_t row, size_t col) { return _data[row][col]; }
 	uint8_t&operator()(Point pt) { return _data[pt.y][pt.x]; }
+
+	uint8_t Read(Point pt)const { return _data[pt.y][pt.x]; }
 	//TODO:将数据改为shared_ptr，并加入多个状态，如亮度系数、对比度系数、放大系数等来进行优化
 	std::vector<std::vector<uint8_t>>_data;
 	Size size;

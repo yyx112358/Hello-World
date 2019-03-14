@@ -48,7 +48,7 @@ int main()
 // 	auto p = make_shared<derive>();
 // 	foo(p);
 
-	Game game(4,5);
+	Game game(8,9);
 	game.Process();
 	system("pause");
 	return 0;
