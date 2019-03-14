@@ -43,6 +43,17 @@ const Bitmap& Ally::GetBitmap() const
 	return b;
 }
 
+bool Ally::isInteractable(std::shared_ptr<Object>target) const
+{
+	return false;
+}
+
+const std::string& Ally::TypeName()
+{
+	static const std::string name = "Ally";
+	return name;
+}
+
 std::list<std::shared_ptr<Object>> Ally::Destroy()
 {
 	//throw std::logic_error("The method or operation is not implemented.");

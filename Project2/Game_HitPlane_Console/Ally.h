@@ -13,7 +13,13 @@ public:
 	virtual std::list<std::shared_ptr<Object>> Destroy() override;
 
 	virtual const Bitmap& GetBitmap() const override;	
+
+	virtual bool isInteractable(std::shared_ptr<Object>target) const override;
+
 private:
 	Ally();
+protected:
+	virtual const std::string& TypeName() override;
+
 };
 

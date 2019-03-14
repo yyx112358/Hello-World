@@ -20,7 +20,7 @@ void Game::Process() //接收输入、根据输入处理、碰撞和交互、增删物体、显示
 		auto keys = GetKeys();
 		if (keys.find(27) != string::npos)
 			break;
-		//TODO:需不需要一个CreateObjsBeforeMove();？？？
+		//TODO:CreateObjsBeforeMove();工厂类添加物体，工厂类一开始可以用时间随机生成，之后可以结合脚本做动态队列
 		//TODO:ManipulateObjsBeforeMove();脚本直接操纵，可以之后新建一个Script类
 		for (auto &obj : _objs) 
 		{
@@ -40,7 +40,7 @@ void Game::Process() //接收输入、根据输入处理、碰撞和交互、增删物体、显示
 		}
 
 		list<shared_ptr<Object>>newObjs;
-		//TODO:CreateObjsAfterMove();工厂类添加物体，工厂类一开始可以用时间随机生成，之后可以结合脚本做动态队列
+		//TODO:加入碰撞检测，只有要碰撞的才进行处理
 		for (auto it = _objs.begin(); it != _objs.end();)//摧毁物体
 		{
 			if ((*it)->isNeedDestroy() == true)
