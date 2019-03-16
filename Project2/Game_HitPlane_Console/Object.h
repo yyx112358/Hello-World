@@ -73,7 +73,7 @@ public:
 		ENEMY_EFFECT_T = ALLY_T + 0x80,
 	};
 
-	virtual const std::string& TypeName() = 0;//类型名，用于类型反射
+	const std::string& TypeName() { return _typeName; };
 	const size_t id;//编号，每一个物体独有
 	const clock_t createTime;//创建时间	
 
@@ -85,9 +85,12 @@ protected:
 	virtual void _Interact(Object&another) = 0;
 	virtual std::list<std::shared_ptr<Object>>&&_Destroy() = 0;
 
-	QRect _area;
+	QRect _area;//占据区域，包括位置和大小
 	int _z;//[reserve]Z轴坐标
 	QSize _boardSize;//屏幕尺寸
+	std::string _typeName;//类型名，用于类型反射
+// 	InteractType _interactType;//交互类型，参考InteractType
+// 	Type _type;//类型
 
 	clock_t _lastUpdateTime;//上一次更新完成时间
 	bool _isNeedDestroy = false;

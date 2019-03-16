@@ -4,36 +4,43 @@ class Enemy :
 	public Plane
 {
 public:
-	Enemy();
-	~Enemy();
-
-	virtual void Update() override
+	Enemy(QRect area, QSize boardSize) 
+		:Plane(area, boardSize) 
 	{
-		throw std::logic_error("The method or operation is not implemented.");
+		_bitmap = Bitmap(QSize(1, 1), 'e'); 
+		_typeName = "ENEMY_T";
+	}
+	~Enemy(){}
+
+	virtual bool isInteractable(std::shared_ptr<Object>target) const override
+	{
+		return false;
+	}
+
+protected:
+	virtual void _Update() override
+	{
+		_area.moveLeft(_area.left()-1);
+		if (_area.right() < 0)
+			_isNeedDestroy = true;
 	}
 
 
-	virtual void ProcessInput(const std::string& input) override
+	virtual void _ProcessInput(const std::string& input) override
 	{
-		throw std::logic_error("The method or operation is not implemented.");
+		return;
 	}
 
 
-	virtual void Interact(Object&another) override
+	virtual void _Interact(Object&another) override
 	{
-		throw std::logic_error("The method or operation is not implemented.");
+		return;
 	}
 
 
-	virtual std::list<std::shared_ptr<Object>> Destroy() override
+	virtual std::list<std::shared_ptr<Object>>&& _Destroy() override
 	{
-		throw std::logic_error("The method or operation is not implemented.");
-	}
-
-
-	virtual const Bitmap& GetBitmap() const override
-	{
-		throw std::logic_error("The method or operation is not implemented.");
+		return std::list<std::shared_ptr<Object>>();
 	}
 
 };

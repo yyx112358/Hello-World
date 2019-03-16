@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "Ally.h"
+#include "Enemy.h"
 #include <conio.h>
 #include <windows.h>
 
@@ -15,12 +16,14 @@ Game::Game(int row, int col)
 
 void Game::Process() //接收输入、根据输入处理、碰撞和交互、增删物体、显示
 {
+	clock_t lasttime = clock();
 	while (1)
 	{
 		auto keys = GetKeys();
 		if (keys.find(27) != string::npos)
 			break;
 		//TODO:CreateObjsBeforeMove();工厂类添加物体，工厂类一开始可以用时间随机生成，之后可以结合脚本做动态队列
+		_objs.push_back(std::make_shared<Enemy>(QRect()))
 		//TODO:ManipulateObjsBeforeMove();脚本直接操纵，可以之后新建一个Script类
 		for (auto &obj : _objs) 
 		{
@@ -58,7 +61,8 @@ void Game::Process() //接收输入、根据输入处理、碰撞和交互、增删物体、显示
 		for (auto obj : _objs)//TODO:可以改为固定间隔刷新
 			_board.AddObj(obj);
 		_board.Paint();
-		Sleep(20);
+		lasttime = clock();
+		Sleep(40);
 	}
 }
 

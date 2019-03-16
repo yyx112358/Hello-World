@@ -47,10 +47,6 @@ bool Ally::isInteractable(std::shared_ptr<Object>target) const
 	return false;
 }
 
-const std::string& Ally::TypeName()
-{
-	static const std::string name = "Ally";
-	return name;
-}
+
 
 
