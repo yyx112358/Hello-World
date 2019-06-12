@@ -5,15 +5,15 @@
 #include "Object.h"
 
 //TODO:之后改为抽象类
-class Board	//绘图类
+class Scene	//绘图类
 {
 public:
-	Board(int row, int col) :_bitmap(QSize(col, row), ' ')
+	Scene(int row, int col) :_bitmap(QSize(col, row), ' ')
 	{}
 
 	void Resize();
-	/*virtual*/ void Reset();//=0
-	/*virtual*/ void Paint();//=0
+	virtual void Reset();//=0
+	virtual void Paint();//=0
 	void AddObj(std::shared_ptr<Object>pobj);
 	QSize size()const { return _bitmap.size; }
 private:

@@ -15,7 +15,7 @@ public:
 	Bitmap() {}
 	Bitmap(QSize size,uint32_t value)
 		:size(size),
-		_data(std::vector<std::vector<uint8_t>>(size.height(), std::vector<uint8_t>(size.width(),value)))
+		_data(std::vector<std::vector<uint32_t>>(size.height(), std::vector<uint32_t>(size.width(),value)))
 	{}
 
 	void Reset(uint32_t value)
@@ -31,12 +31,12 @@ public:
 
 	}
 
-	uint8_t&operator()(size_t row, size_t col) { return _data[row][col]; }
-	uint8_t&operator()(QPoint pt) { return _data[pt.y()][pt.x()]; }
+	uint32_t&operator()(size_t row, size_t col) { return _data[row][col]; }
+	uint32_t&operator()(QPoint pt) { return _data[pt.y()][pt.x()]; }
 
 	uint8_t Read(QPoint pt)const { return _data[pt.y()][pt.x()]; }
 	//TODO:将数据改为shared_ptr，并加入多个状态，如亮度系数、对比度系数、放大系数等来进行优化
-	std::vector<std::vector<uint8_t>>_data;
+	std::vector<std::vector<uint32_t>>_data;
 	QSize size;
 
 	bool isVisiable = true;//是否可见

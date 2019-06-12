@@ -25,26 +25,34 @@ void Ally::_ProcessInput(const std::string& input)
 	}
 	if (_area.left() < 0)_area.moveLeft(0);
 	if (_area.top() < 0)_area.moveTop(0);
-	if (_area.right() >= _boardSize.width())_area.moveRight(_boardSize.width() - 1);
-	if (_area.bottom() >= _boardSize.height())_area.moveBottom(_boardSize.height() - 1);
+	if (_area.right() >= _sceneSize.width())_area.moveRight(_sceneSize.width() - 1);
+	if (_area.bottom() >= _sceneSize.height())_area.moveBottom(_sceneSize.height() - 1);
 // 	_tlpt.x = max(0, _tlpt.x);
 // 	_tlpt.x=min(0,)
 }
 
-void Ally::_Interact(Object&another)
+void Ally::_Interact(std::shared_ptr<Object> another,bool isCollided)
 {
 	//throw std::logic_error("The method or operation is not implemented.");
+	if (another->GetType() & Type::ENEMY_T && isCollided == true)
+	{
+		_score++;
+	}
 }
 
 
-std::list<std::shared_ptr<Object>>&& Ally::_Destroy()
+void Ally::_Multiply(std::list<std::shared_ptr<Object>>&newObjs)
+{
+
+}
+
+void Ally::_Destroy()
 {
 	//throw std::logic_error("The method or operation is not implemented.");
-	return std::list<std::shared_ptr<Object>>();
 }
-bool Ally::isInteractable(std::shared_ptr<Object>target) const
+bool Ally::IsInteractable(std::shared_ptr<Object>target) const
 {
-	return false;
+	return target->GetType()&Type::ENEMY_T;
 }
 
 

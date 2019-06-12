@@ -11,13 +11,13 @@
 #include <memory>
 #include <time.h>
 
-class Object:QObject
+class Object:public QObject
 {
 	Q_OBJECT
 
 public:
-	Object(QRect area, QSize boardSize)
-		:QObject(nullptr),_area(area), _boardSize(boardSize),
+	Object(QRect area, QSize sceneSize)
+		:QObject(nullptr),_area(area), _sceneSize(sceneSize),
 		id(_RegisterID()), createTime(clock())
 	{  }
 	virtual ~Object() {}
@@ -26,19 +26,23 @@ public:
 	{
 		this->_Update();
 		_lastUpdateTime = clock();
-		emit sig_Updated();
+		emit sig_Updated(this);
 	}
 	void ProcessInput(const std::string& input)
 	{
 		this->_ProcessInput(input);
 	}
-	void Interact(Object&another)
+	void Interact(std::shared_ptr<Object> another, bool isCollided)
 	{
-		this->_Interact(another);
+		this->_Interact(another, isCollided);
 	}
-	std::list<std::shared_ptr<Object>>&&Destroy()
+	void Multiply(std::list<std::shared_ptr<Object>>&newObjs)
 	{
-		return _Destroy();
+		this->_Multiply(newObjs);
+	}
+	void Destroy()
+	{
+		this->_Destroy();
 	}
 
 	void SetBitmap(const Bitmap&src) { _bitmap = src; }
@@ -49,8 +53,9 @@ public:
 
 	void Resize(QSize size);
 
-	bool isNeedDestroy()const { return _isNeedDestroy; }
-	virtual bool isInteractable(std::shared_ptr<Object>target)const = 0;//与目标对象是否可交互
+	bool IsNeedDestroy()const { return _isNeedDestroy; }
+	virtual bool IsInteractable(std::shared_ptr<Object>target)const = 0;//与目标对象是否可交互
+	friend bool IsCollided(const Object&obj1, const Object&obj2) { return obj1._area.contains(obj2._area, false); }
 
 	const QRect& GetArea()const { return _area; }
 	size_t GetID()const { return id; }
@@ -73,24 +78,26 @@ public:
 		ENEMY_EFFECT_T = ALLY_T + 0x80,
 	};
 
+	Type GetType()const { return _type; }
 	const std::string& TypeName() { return _typeName; };
 	const size_t id;//编号，每一个物体独有
 	const clock_t createTime;//创建时间	
 
 signals:
-	void sig_Updated();
+	void sig_Updated(const Object* const obj);
 protected:
 	virtual void _Update() = 0;
 	virtual void _ProcessInput(const std::string& input) = 0;
-	virtual void _Interact(Object&another) = 0;
-	virtual std::list<std::shared_ptr<Object>>&&_Destroy() = 0;
+	virtual void _Interact(std::shared_ptr<Object> another, bool isCollided) = 0;
+	virtual void _Multiply(std::list<std::shared_ptr<Object>>&newObjs) = 0;
+	virtual void _Destroy() = 0;
 
 	QRect _area;//占据区域，包括位置和大小
 	int _z;//[reserve]Z轴坐标
-	QSize _boardSize;//屏幕尺寸
+	QSize _sceneSize;//屏幕尺寸
 	std::string _typeName;//类型名，用于类型反射
 // 	InteractType _interactType;//交互类型，参考InteractType
-// 	Type _type;//类型
+ 	Type _type;//类型
 
 	clock_t _lastUpdateTime;//上一次更新完成时间
 	bool _isNeedDestroy = false;

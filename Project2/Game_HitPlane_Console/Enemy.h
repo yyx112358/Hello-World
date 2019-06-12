@@ -5,24 +5,31 @@ class Enemy :
 {
 public:
 	Enemy(QRect area, QSize boardSize) 
-		:Plane(area, boardSize) 
+		:Plane(area, boardSize)
 	{
 		_bitmap = Bitmap(QSize(1, 1), 'e'); 
 		_typeName = "ENEMY_T";
+		_type = Type::ENEMY_T;
 	}
 	~Enemy(){}
 
-	virtual bool isInteractable(std::shared_ptr<Object>target) const override
+	virtual bool IsInteractable(std::shared_ptr<Object>target) const override
 	{
-		return false;
+		return target->GetType()&Type::ALLY_T;
 	}
 
 protected:
+	clock_t _lastMoveTime = clock();
+
 	virtual void _Update() override
 	{
-		_area.moveLeft(_area.left()-1);
-		if (_area.right() < 0)
-			_isNeedDestroy = true;
+		if (clock() - _lastMoveTime > 500)
+		{
+			_area.moveLeft(_area.left() - 1);
+			if (_area.right() < 0)
+				_isNeedDestroy = true;
+			_lastMoveTime = clock();
+		}
 	}
 
 
@@ -32,15 +39,22 @@ protected:
 	}
 
 
-	virtual void _Interact(Object&another) override
+	virtual void _Interact(std::shared_ptr<Object> another, bool isCollided) override
 	{
+		if (another->GetType()&Type::ALLY_T && isCollided ==true)
+		{
+			_isNeedDestroy = true;
+		}
 		return;
 	}
 
-
-	virtual std::list<std::shared_ptr<Object>>&& _Destroy() override
+	virtual void _Multiply(std::list<std::shared_ptr<Object>>&newObjs)
 	{
-		return std::list<std::shared_ptr<Object>>();
+
+	}
+	virtual void _Destroy() override
+	{
+		
 	}
 
 };

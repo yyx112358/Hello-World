@@ -97,19 +97,28 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Ally.cpp" />
-    <ClCompile Include="Board.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Ally.h" />
+    <ClInclude Include="Ally.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;H:\Program Files (x86)\Visual Leak Detector\include</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;H:\Program Files (x86)\Visual Leak Detector\include</IncludePath>
+    </ClInclude>
     <ClInclude Include="Bitmap.h" />
-    <ClInclude Include="Board.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="Enemy.h" />
-    <ClInclude Include="Game.h" />
+    <QtMoc Include="Game.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;H:\Program Files (x86)\Visual Leak Detector\include</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;H:\Program Files (x86)\Visual Leak Detector\include</IncludePath>
+    </QtMoc>
     <QtMoc Include="Object.h" />
-    <ClInclude Include="Plane.h" />
+    <ClInclude Include="Plane.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;H:\Program Files (x86)\Visual Leak Detector\include</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;H:\Program Files (x86)\Visual Leak Detector\include</IncludePath>
+    </ClInclude>
     <ClInclude Include="Point.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

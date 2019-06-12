@@ -3,27 +3,34 @@
 #include "Enemy.h"
 #include <conio.h>
 #include <windows.h>
-
+#include <random>
 using namespace std;
 
 Game::Game(int row, int col) 
-	:_board(row, col)
+	:_scene(row, col)
 {
 	auto player = make_shared<Ally>(QRect(0,0,1,1), QSize(col, row));
 	_objs.push_back(player);
+	QObject::connect(player.get(), &Object::sig_Updated,this, &Game::SetPlayerStatus);
 	//_allys.push_back(std::weak_ptr<Object>(player));
 }
 
 void Game::Process() //接收输入、根据输入处理、碰撞和交互、增删物体、显示
 {
-	clock_t lasttime = clock();
+	clock_t lastCreateEnemyTime = clock();
 	while (1)
 	{
 		auto keys = GetKeys();
 		if (keys.find(27) != string::npos)
 			break;
 		//TODO:CreateObjsBeforeMove();工厂类添加物体，工厂类一开始可以用时间随机生成，之后可以结合脚本做动态队列
-		_objs.push_back(std::make_shared<Enemy>(QRect()))
+		if(clock()-lastCreateEnemyTime>2000)
+		{
+			_objs.push_back(std::make_shared<Enemy>(
+				QRect(_scene.size().width() - 2, rand() % (_scene.size().height()), 1, 1),
+				_scene.size()));
+			lastCreateEnemyTime = clock();
+		}
 		//TODO:ManipulateObjsBeforeMove();脚本直接操纵，可以之后新建一个Script类
 		for (auto &obj : _objs) 
 		{
@@ -31,25 +38,28 @@ void Game::Process() //接收输入、根据输入处理、碰撞和交互、增删物体、显示
 			obj->Update();//更新状态
 		}
 
+		//TODO:加入k-d tree碰撞检测，减少比较次数
 		for (auto it1 = _objs.begin(); it1 != _objs.end(); ++it1)//交互
 		{
 			auto it2 = it1;
 			++it2;
 			for (; it2 != _objs.end(); ++it2)
 			{
-				(*it1)->Interact(**it2);
-				(*it2)->Interact(**it1);
+				bool collided = IsCollided(**it1, **it2);
+				if((*it1)->IsInteractable(*it2)==true)
+					(*it1)->Interact(*it2,collided);
+				if((*it2)->IsInteractable(*it1) == true)
+					(*it2)->Interact(*it1,collided);
 			}
 		}
 
-		list<shared_ptr<Object>>newObjs;
-		//TODO:加入碰撞检测，只有要碰撞的才进行处理
-		for (auto it = _objs.begin(); it != _objs.end();)//摧毁物体
+		list<shared_ptr<Object>>newObjs;		
+		for (auto it = _objs.begin(); it != _objs.end();)//添加和摧毁物体
 		{
-			if ((*it)->isNeedDestroy() == true)
+			(*it)->Multiply(newObjs);
+			if ((*it)->IsNeedDestroy() == true)
 			{
-				auto tmp = (*it)->Destroy();
-				newObjs.insert(newObjs.end(), tmp.begin(), tmp.end());
+				(*it)->Destroy();
 				it = _objs.erase(it);
 			}
 			else
@@ -57,11 +67,11 @@ void Game::Process() //接收输入、根据输入处理、碰撞和交互、增删物体、显示
 		}
 		_objs.insert(_objs.end(), newObjs.begin(), newObjs.end());
 
-		_board.Reset();
+		_scene.Reset();
+		DisplayUI();
 		for (auto obj : _objs)//TODO:可以改为固定间隔刷新
-			_board.AddObj(obj);
-		_board.Paint();
-		lasttime = clock();
+			_scene.AddObj(obj);
+		_scene.Paint();
 		Sleep(40);
 	}
 }
@@ -76,4 +86,19 @@ std::string Game::GetKeys()
 	}
 	else
 		return "";
+}
+
+void Game::DisplayUI()
+{
+	cout << "=========控制台游戏==========" << endl
+		<< "分数：" << _score << endl
+		<< "HP：" << _HP << '/' << _maxHP << endl;
+}
+
+void Game::SetPlayerStatus(const Object* const obj)
+{
+	const Ally*const player = dynamic_cast<const Ally* const>(obj);
+	_HP = player->GetHP();
+	_maxHP = player->GetMaxHP();
+	_score = player->GetScore();
 }
