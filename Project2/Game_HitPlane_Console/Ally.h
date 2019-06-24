@@ -11,8 +11,8 @@ public:
 		_typeName = "ALLY_T";
 		_type = Type::ALLY_T;
 
-		_HP = 1;
-		_maxHP = 1;
+		_HP = 5;
+		_maxHP = 5;
 		_score = 0;
 	}
 	virtual ~Ally(){}

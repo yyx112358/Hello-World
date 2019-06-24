@@ -21,8 +21,17 @@ void Game::Process() //接收输入、根据输入处理、碰撞和交互、增删物体、显示
 	while (1)
 	{
 		auto keys = GetKeys();
-		if (keys.find(27) != string::npos)
+		if (keys.find(27) != string::npos)//退出
 			break;
+		if (keys.find('p') != string::npos || keys.find('P') != string::npos)//暂停
+		{
+			string tmpkeys;
+			do 
+			{
+				tmpkeys = GetKeys();
+			} while (tmpkeys.find('p') == string::npos
+				&& tmpkeys.find('P') == string::npos);
+		}
 		//TODO:CreateObjsBeforeMove();工厂类添加物体，工厂类一开始可以用时间随机生成，之后可以结合脚本做动态队列
 		if(clock()-lastCreateEnemyTime>2000)
 		{
@@ -72,8 +81,13 @@ void Game::Process() //接收输入、根据输入处理、碰撞和交互、增删物体、显示
 		for (auto obj : _objs)//TODO:可以改为固定间隔刷新
 			_scene.AddObj(obj);
 		_scene.Paint();
+		if (_crashFlag == true)
+			break;
 		Sleep(40);
 	}
+	_scene.Reset();
+	cout << "Game Over" << endl
+		<< "得分:" << _score << endl;
 }
 
 std::string Game::GetKeys()
@@ -101,4 +115,6 @@ void Game::SetPlayerStatus(const Object* const obj)
 	_HP = player->GetHP();
 	_maxHP = player->GetMaxHP();
 	_score = player->GetScore();
+	if (_HP <= 0)
+		_crashFlag = true;
 }

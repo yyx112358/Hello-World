@@ -36,6 +36,7 @@ void Ally::_Interact(std::shared_ptr<Object> another,bool isCollided)
 	//throw std::logic_error("The method or operation is not implemented.");
 	if (another->GetType() & Type::ENEMY_T && isCollided == true)
 	{
+		_HP--;
 		_score++;
 	}
 }
