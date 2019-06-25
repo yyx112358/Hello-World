@@ -90,7 +90,7 @@ void Game::Process() //接收输入、根据输入处理、碰撞和交互、增删物体、显示
 		<< "得分:" << _score << endl;
 }
 
-std::string Game::GetKeys()
+std::string Game::GetKeys()const
 {
 	if (_kbhit())
 	{

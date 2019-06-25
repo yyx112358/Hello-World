@@ -11,7 +11,9 @@ void Scene::AddObj(std::shared_ptr<Object>pobj)
 {
 	const Bitmap&objBitmap = pobj->GetBitmap();
 	//TODO:添加支持重叠的函数	
-	_bitmap(pobj->GetArea().topLeft()) = objBitmap.Read(QPoint(0,0));
+	//TODO:添加大图像的显示
+	auto p = pobj->GetArea().topLeft();
+	_bitmap(QPoint(p.x(),p.y())) = objBitmap.Read(QPoint(0,0));
 
 	//Point crossTlpt(,)
 }

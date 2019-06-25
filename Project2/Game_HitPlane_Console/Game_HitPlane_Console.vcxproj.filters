@@ -64,6 +64,9 @@
     <ClInclude Include="Plane.h">
       <Filter>Objects</Filter>
     </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Object.h">

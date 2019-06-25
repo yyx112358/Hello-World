@@ -12,7 +12,7 @@ public:
 	~Game(){}
 	
 	void Process();//接收输入、根据输入处理、碰撞和交互、增删物体、显示
-	std::string GetKeys();
+	std::string GetKeys()const;
 	void DisplayUI();
 	void Pause(bool isPause);
 

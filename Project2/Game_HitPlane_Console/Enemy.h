@@ -10,8 +10,9 @@ public:
 		_bitmap = Bitmap(QSize(1, 1), 'e'); 
 		_typeName = "ENEMY_T";
 		_type = Type::ENEMY_T;
+		_vx = -1;
 	}
-	~Enemy(){}
+	virtual ~Enemy(){}
 
 	virtual bool IsInteractable(std::shared_ptr<Object>target) const override
 	{
@@ -23,13 +24,17 @@ protected:
 
 	virtual void _Update() override
 	{
-		if (clock() - _lastMoveTime > 500)
-		{
-			_area.moveLeft(_area.left() - 1);
-			if (_area.right() < 0)
-				_isNeedDestroy = true;
-			_lastMoveTime = clock();
-		}
+		Object::_Update();
+		if (_area.right() <= 0)
+			_isNeedDestroy = true;
+
+// 		if (clock() - _lastMoveTime > 500)
+// 		{
+// 			_area.moveLeft(_area.left() - 1);
+// 			if (_area.right() < 0)
+// 				_isNeedDestroy = true;
+// 			_lastMoveTime = clock();
+// 		}
 	}
 
 

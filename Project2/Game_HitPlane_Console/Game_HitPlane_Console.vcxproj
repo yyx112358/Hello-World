@@ -108,6 +108,7 @@
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;H:\Program Files (x86)\Visual Leak Detector\include</IncludePath>
     </ClInclude>
     <ClInclude Include="Bitmap.h" />
+    <ClInclude Include="Bullet.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Enemy.h" />
     <QtMoc Include="Game.h">
